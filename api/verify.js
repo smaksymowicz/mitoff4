@@ -6,6 +6,10 @@ export default async function handler(req, res) {
   const { question } = req.body;
   if (!question || question.trim() === "") return res.status(400).json({ error: "Brak pytania" });
 
+  if (!process.env.OPENROUTER_API_KEY) {
+    return res.status(500).json({ error: "Brak klucza API w Environment Variables" });
+  }
+
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
