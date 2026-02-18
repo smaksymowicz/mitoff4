@@ -1,151 +1,515 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MitOFF – weryfikacja mitów zdrowotnych</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fakty i Mity: Zdrowie</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #1f2937, #0f172a);
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  height: 110px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  resize: none;
+  font-size: 15px;
+  margin-bottom: 20px;
+  background: #111827;
+  color: white;
+}
+
+textarea:focus {
+  outline: 2px solid #6366f1;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+
+.report {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #111827;
+  white-space: pre-line;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.loading {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: none;
+  background: #111827;
+  color: white;
+}
+
+.truth-score {
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: white;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+a { color: #6366f1; text-decoration: underline; }
+a:hover { text-decoration: none; }
+
+.disclaimer {
+  margin-top: 40px;
+  font-size: 13px;
+  color: #facc15;
+}
+</style>
 </head>
-<body class="bg-gray-100 text-gray-900">
 
-  <!-- NAGŁÓWEK -->
-  <header class="text-center py-6 bg-purple-600 text-white shadow-md">
-    <h1 class="text-2xl font-bold">MitOFF – sprawdź popularne mity zdrowotne</h1>
-  </header>
+<body>
+<div class="container">
+  <h1>Fakty i Mity: Zdrowie</h1>
+  <div class="subtitle">Weryfikacja faktów i mitów medycznych w oparciu o dowody naukowe</div>
 
-  <!-- MENU IKON POD NAGŁÓWKIEM -->
-  <div id="iconMenu" class="flex justify-center gap-4 mt-6 flex-wrap opacity-0 transform -translate-y-4 transition-all duration-700">
-    <button data-target="szczepienia" class="flex flex-col items-center p-2 rounded-xl transition-all duration-200 hover:bg-white/50">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-syringe w-5 h-5 text-purple-500">
-        <path d="m18 2 4 4"></path>
-        <path d="m17 7 3-3"></path>
-        <path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"></path>
-        <path d="m9 11 4 4"></path>
-        <path d="m5 19-3 3"></path>
-        <path d="m14 4 6 6"></path>
-      </svg>
-      <span class="text-xs text-slate-400 mt-1">Szczepienia</span>
-    </button>
+  <textarea id="questionInput" placeholder="Wpisz własne pytanie lub wybierz z listy poniżej..."></textarea>
 
-    <button data-target="leki" class="flex flex-col items-center p-2 rounded-xl transition-all duration-200 hover:bg-white/50">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pill w-5 h-5 text-orange-500">
-        <path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"></path>
-        <path d="m8.5 8.5 7 7"></path>
-      </svg>
-      <span class="text-xs text-slate-400 mt-1">Leki</span>
-    </button>
+  <select id="topicSelect" onchange="insertQuestion()">
+    <option value="">-Sprawdź popularne mity: wybierz z listy-</option>
 
-    <button data-target="zywienie" class="flex flex-col items-center p-2 rounded-xl transition-all duration-200 hover:bg-white/50 bg-white/70 shadow-md">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-apple w-5 h-5 text-green-500">
-        <path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path>
-        <path d="M10 2c1 .5 2 2 2 5"></path>
-      </svg>
-      <span class="text-xs text-slate-400 mt-1">Żywienie</span>
-    </button>
+    <optgroup label="Szczepienia">
+      <option>Czy szczepionki powodują autyzm?</option>
+      <option>Czy szczepionki przeciążają układ odpornościowy dziecka?</option>
+      <option>Czy naturalne przechorowanie daje zawsze lepszą odporność niż szczepienie?</option>
+      <option>Czy szczepionki zawierają toksyczne dawki rtęci lub aluminium?</option>
+    </optgroup>
 
-    <button data-target="choroby" class="flex flex-col items-center p-2 rounded-xl transition-all duration-200 hover:bg-white/50">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-5 h-5 text-rose-500">
-        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
-      </svg>
-      <span class="text-xs text-slate-400 mt-1">Choroby</span>
-    </button>
+    <optgroup label="Leki i terapie">
+      <option>Czy antybiotyki działają na infekcje wirusowe?</option>
+      <option>Czy witamina C leczy przeziębienie?</option>
+      <option>Czy leki przeciwbólowe zawsze niszczą wątrobę lub nerki?</option>
+      <option>Czy suplementy diety mogą zastąpić leczenie farmakologiczne?</option>
+      <option>Czy naturalne preparaty są zawsze bezpieczniejsze niż leki na receptę?</option>
+    </optgroup>
 
-    <button data-target="technologia" class="flex flex-col items-center p-2 rounded-xl transition-all duration-200 hover:bg-white/50">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone w-5 h-5 text-blue-500">
-        <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-        <path d="M12 18h.01"></path>
-      </svg>
-      <span class="text-xs text-slate-400 mt-1">Technologia</span>
-    </button>
-  </div>
+    <optgroup label="Żywienie">
+      <option>Czy jedzenie po godzinie 18:00 powoduje przyrost masy ciała?</option>
+      <option>Czy gluten szkodzi każdemu?</option>
+      <option>Czy brązowy cukier jest zdrowszy niż biały?</option>
+      <option>Czy produkty 'light' zawsze sprzyjają odchudzaniu?</option>
+      <option>Czy picie ośmiu szklanek wody dziennie jest konieczne dla każdego?</option>
+      <option>Czy mleko jest niezbędne dorosłym dla zdrowych kości?</option>
+      <option>Czy diety sokowe oczyszczają organizm z toksyn?</option>
+      <option>Czy organizm wymaga regularnego 'odkwaszania'?</option>
+      <option>Czy głodówki przyspieszają metabolizm?</option>
+      <option>Czy spalanie tłuszczu można ukierunkować na jedną część ciała ćwiczeniami?</option>
+    </optgroup>
 
-  <!-- SELECT Z KATEGORIAMI I PYTANIAMI -->
-  <main class="max-w-3xl mx-auto mt-10 px-4">
-    <select id="mitSelect" class="w-full p-2 border rounded mb-10">
-      <option value="">-Sprawdź popularne mity: wybierz z listy-</option>
+    <optgroup label="Choroby, odporność i profilaktyka">
+      <option>Czy zimne powietrze powoduje przeziębienie?</option>
+      <option>Czy stres jest bezpośrednią przyczyną wrzodów żołądka?</option>
+      <option>Czy cukier powoduje nadpobudliwość u dzieci?</option>
+      <option>Czy kawa zawsze odwadnia organizm?</option>
+      <option>Czy maseczki chronią przed wirusami?</option>
+    </optgroup>
 
-      <optgroup label="Szczepienia">
-        <option>Czy szczepionki powodują autyzm?</option>
-        <option>Czy szczepionki przeciążają układ odpornościowy dziecka?</option>
-        <option>Czy naturalne przechorowanie daje zawsze lepszą odporność niż szczepienie?</option>
-        <option>Czy szczepionki zawierają toksyczne dawki rtęci lub aluminium?</option>
-      </optgroup>
+    <optgroup label="Technologia i środowisko">
+      <option>Czy kuchenki mikrofalowe niszczą wartości odżywcze bardziej niż tradycyjne gotowanie?</option>
+      <option>Czy telefony komórkowe w standardowym użytkowaniu powodują nowotwory?</option>
+      <option>Czy klimatyzacja bezpośrednio wywołuje choroby?</option>
+      <option>Czy technologia 5G wpływa negatywnie na zdrowie?</option>
+    </optgroup>
 
-      <optgroup label="Leki i terapie">
-        <option>Czy antybiotyki działają na infekcje wirusowe?</option>
-        <option>Czy witamina C leczy przeziębienie?</option>
-        <option>Czy leki przeciwbólowe zawsze niszczą wątrobę lub nerki?</option>
-        <option>Czy suplementy diety mogą zastąpić leczenie farmakologiczne?</option>
-        <option>Czy naturalne preparaty są zawsze bezpieczniejsze niż leki na receptę?</option>
-      </optgroup>
+  </select>
 
-      <optgroup label="Żywienie">
-        <option>Czy jedzenie po godzinie 18:00 powoduje przyrost masy ciała?</option>
-        <option>Czy gluten szkodzi każdemu?</option>
-        <option>Czy brązowy cukier jest zdrowszy niż biały?</option>
-        <option>Czy produkty 'light' zawsze sprzyjają odchudzaniu?</option>
-        <option>Czy picie ośmiu szklanek wody dziennie jest konieczne dla każdego?</option>
-        <option>Czy mleko jest niezbędne dorosłym dla zdrowych kości?</option>
-        <option>Czy diety sokowe oczyszczają organizm z toksyn?</option>
-        <option>Czy organizm wymaga regularnego 'odkwaszania'?</option>
-        <option>Czy głodówki przyspieszają metabolizm?</option>
-        <option>Czy spalanie tłuszczu można ukierunkować na jedną część ciała ćwiczeniami?</option>
-      </optgroup>
+  <button onclick="verifyFact()">Weryfikuj</button>
 
-      <optgroup label="Choroby, odporność i profilaktyka">
-        <option>Czy zimne powietrze powoduje przeziębienie?</option>
-        <option>Czy stres jest bezpośrednią przyczyną wrzodów żołądka?</option>
-        <option>Czy cukier powoduje nadpobudliwość u dzieci?</option>
-        <option>Czy kawa zawsze odwadnia organizm?</option>
-        <option>Czy maseczki chronią przed wirusami?</option>
-      </optgroup>
+  <div id="loading" class="loading"></div>
+  <div id="report" class="report"></div>
 
-      <optgroup label="Technologia i środowisko">
-        <option>Czy kuchenki mikrofalowe niszczą wartości odżywcze bardziej niż tradycyjne gotowanie?</option>
-        <option>Czy telefony komórkowe w standardowym użytkowaniu powodują nowotwory?</option>
-        <option>Czy klimatyzacja bezpośrednio wywołuje choroby?</option>
-        <option>Czy technologia 5G wpływa negatywnie na zdrowie?</option>
-      </optgroup>
-    </select>
-  </main>
+  <div class="disclaimer">⚠️ Odpowiedzi z listy wyboru są zweryfikowane przez ludzkich ekspertów. Jednak odpowiedzi spoza tej listy są weryfikowane przez sztuczną inteligencję, która może popełniać błędy. Pamiętaj - aplikacja służy wyłącznie celom informacyjnym. W przypadku problemów zdrowotnych skonsultuj się z lekarzem.</div>
+</div>
 
-  <!-- SKRYPT – ANIMACJA I PRZEWIJANIE -->
-  <script>
-    // Animacja wejścia menu
-    window.addEventListener('DOMContentLoaded', () => {
-      const menu = document.getElementById('iconMenu');
-      setTimeout(() => {
-        menu.classList.remove('opacity-0', '-translate-y-4');
-        menu.classList.add('opacity-100', 'translate-y-0');
-      }, 100);
+<script>
+// Predefiniowane odpowiedzi dla wszystkich pytań z listy rozwijanej
+const predefinedAnswers = {
+  // Szczepienia
+  "Czy szczepionki powodują autyzm?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma dowodów naukowych na związek szczepionek z autyzmem. Hipoteza ta została obalona i nie potwierdzono związku przyczynowego między szczepieniami a ASD. Szczepienia chronią przed ciężkimi chorobami zakaźnymi bez zwiększania ryzyka zaburzeń rozwojowych.",
+    sources: [
+      "https://szczepienia.pzh.gov.pl/faq/gdzie-mozna-znalezc-dowody-na-brak-zwiazku-przyczynowego-pomiedzy-autyzmem-a-szczepieniami/",
+      "https://www.cdc.gov/vaccinesafety/concerns/autism.html",
+      "https://www.who.int/news-room/fact-sheets/detail/vaccine-safety"
+    ]
+  },
+  "Czy szczepionki przeciążają układ odpornościowy dziecka?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Układ odpornościowy dziecka jest w stanie prawidłowo reagować na szczepionki. Codzienny kontakt z antygenami z otoczenia jest dużo większy niż to, co zawierają szczepionki, więc nie dochodzi do przeciążenia układu odpornościowego.",
+    sources: [
+      "https://szczepienia.pzh.gov.pl/wszystko-o-szczepieniach/jak-sie-bada-bezpieczenstwo-szczepionek/",
+      "https://www.cdc.gov/vaccinesafety/parents.html"
+    ]
+  },
+  "Czy naturalne przechorowanie daje zawsze lepszą odporność niż szczepienie?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Szczepienia zapewniają odporność bez ryzyka powikłań związanych z naturalnym zakażeniem. W wielu przypadkach odporność po szczepieniu jest trwała i bezpieczna, podczas gdy choroba może prowadzić do ciężkich następstw.",
+    sources: [
+      "https://www.gov.pl/web/szczepimysie/dementujemy-nieprawdziwe-informacje",
+      "https://www.who.int/news-room/fact-sheets/detail/immunization-coverage"
+    ]
+  },
+  "Czy szczepionki zawierają toksyczne dawki rtęci lub aluminium?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Składniki takie jak aluminium lub tiomersal w szczepionkach występują w minimalnych ilościach, które są uznawane za bezpieczne na podstawie badań. Nie wykazano szkodliwego wpływu tych ilości na zdrowie.",
+    sources: [
+      "https://szczepienia.pzh.gov.pl/faq/czy-szczepionki-z-tiomersalem-sa-bezpieczne-skad-to-wiemy/",
+      "https://www.who.int/vaccine_safety/initiative/tools/Thimerosal_faqs.pdf"
+    ]
+  },
+
+  // Leki i terapie
+  "Czy antybiotyki działają na infekcje wirusowe?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Antybiotyki działają tylko na bakterie, nie na wirusy. Stosowanie antybiotyków w infekcjach wirusowych jest nieskuteczne i może prowadzić do wzrostu oporności bakterii.",
+    sources: [
+      "https://www.cdc.gov/antibiotic-use/index.html",
+      "https://www.who.int/news-room/fact-sheets/detail/antibiotic-resistance"
+    ]
+  },
+  "Czy witamina C leczy przeziębienie?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Witamina C nie leczy przeziębienia ani go nie zapobiega w większości przypadków. Jest składnikiem odżywczym ważnym dla organizmu, ale jej suplementacja nie jest skuteczną terapią na przeziębienie.",
+    sources: [
+      "https://pzh.gov.pl/fakty-i-mity-na-temat-grypy/", 
+      "https://zdrowie.pap.pl/dieta/mit-ze-witamina-c-zapobiega-przeziebieniu"
+    ]
+  },
+  "Czy leki przeciwbólowe zawsze niszczą wątrobę lub nerki?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Stosowanie leków przeciwbólowych w zalecanych dawkach jest generalnie bezpieczne. Ryzyko uszkodzenia wątroby lub nerek rośnie przy przewlekłym nadużywaniu lub niewłaściwym stosowaniu.",
+    sources: [
+      "https://www.fda.gov/drugs/safe-use-analgesics",
+      "https://www.ncbi.nlm.nih.gov/books/NBK547743/"
+    ]
+  },
+  "Czy suplementy diety mogą zastąpić leczenie farmakologiczne?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Suplementy diety nie są substytutem leczenia farmakologicznego przepisanego przez lekarza. Mogą uzupełniać dietę, ale nie leczą chorób.",
+    sources: [
+      "https://www.fda.gov/consumers/consumer-updates/dietary-supplements-fact-sheet",
+      "https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
+    ]
+  },
+  "Czy naturalne preparaty są zawsze bezpieczniejsze niż leki na receptę?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Naturalny preparat nie oznacza automatycznie bezpieczeństwa. Leki recepturowe są badane klinicznie, a suplementy mogą mieć skutki uboczne lub interakcje.",
+    sources: [
+      "https://www.who.int/news-room/fact-sheets/detail/traditional-complementary-and-integrative-medicine",
+      "https://www.fda.gov/consumers/consumer-updates/herbal-supplements"
+    ]
+  },
+
+  // Żywienie
+  "Czy jedzenie po godzinie 18:00 powoduje przyrost masy ciała?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma naukowych dowodów, że samo jedzenie po 18:00 prowadzi do przyrostu masy. Bilans kaloryczny i styl życia są kluczowe dla wagi.",
+    sources: [
+      "https://www.nhs.uk/live-well/healthy-weight/eating-late-at-night/"
+    ]
+  },
+  "Czy gluten szkodzi każdemu?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Gluten szkodzi tylko osobom z celiakią lub nietolerancją. Dla większości populacji gluten nie jest szkodliwy.",
+    sources: [
+      "https://www.celiac.org/gluten-free-living/what-is-gluten/"
+    ]
+  },
+  "Czy brązowy cukier jest zdrowszy niż biały?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Brązowy i biały cukier mają podobny wpływ na zdrowie i kaloryczność. Różnice są minimalne.",
+    sources: [
+      "https://www.hsph.harvard.edu/nutritionsource/healthy-drinks/sugar/"
+    ]
+  },
+  "Czy produkty 'light' zawsze sprzyjają odchudzaniu?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Produkty 'light' nie gwarantują utraty wagi. Efekt zależy od bilansu kalorycznego i ogólnej diety.",
+    sources: [
+      "https://www.eufic.org/en/whats-in-food/article/light-products"
+    ]
+  },
+  "Czy picie ośmiu szklanek wody dziennie jest konieczne dla każdego?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma uniwersalnej reguły 8 szklanek dziennie. Ilość potrzebnej wody zależy od wieku, aktywności, klimatu i diety.",
+    sources: [
+      "https://www.nhs.uk/live-well/eat-well/water-drinks-nutrition/"
+    ]
+  },
+  "Czy mleko jest niezbędne dorosłym dla zdrowych kości?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Mleko nie jest jedynym źródłem wapnia i białka. Istnieją inne pokarmy i diety, które dostarczają składniki ważne dla zdrowia kości.",
+    sources: [
+      "https://ods.od.nih.gov/factsheets/Calcium-Consumer/",
+      "https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
+    ]
+  },
+
+  // Diety i detox
+  "Czy diety sokowe oczyszczają organizm z toksyn?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma dowodów, że diety sokowe usuwają toksyny. Organizm sam reguluje detoksykację poprzez wątrobę i nerki.",
+    sources: [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5133120/"
+    ]
+  },
+  "Czy organizm wymaga regularnego 'odkwaszania'?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Koncepcja odkwaszania nie ma naukowego uzasadnienia. Organizm utrzymuje równowagę kwasowo-zasadową naturalnie.",
+    sources: [
+      "https://www.healthline.com/nutrition/alkaline-diet-myth"
+    ]
+  },
+  "Czy głodówki przyspieszają metabolizm?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Głodówki raczej obniżają tempo metabolizmu. Nie przyspieszają metabolizmu w długiej perspektywie.",
+    sources: [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3946160/"
+    ]
+  },
+  "Czy spalanie tłuszczu można ukierunkować na jedną część ciała ćwiczeniami?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie da się lokalnie spalić tłuszczu ćwiczeniami. Redukcja tkanki tłuszczowej odbywa się ogólnie poprzez bilans kaloryczny.",
+    sources: [
+      "https://www.health.harvard.edu/staying-healthy/does-spot-reducing-fat-really-work"
+    ]
+  },
+
+  // Choroby, odporność i profilaktyka
+  "Czy zimne powietrze powoduje przeziębienie?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Przeziębienie wywołują wirusy, a nie sama temperatura. Chłód może ułatwiać przenoszenie wirusów w tłoczonych pomieszczeniach.",
+    sources: [
+      "https://www.cdc.gov/flu/about/prevention.htm"
+    ]
+  },
+  "Czy stres jest bezpośrednią przyczyną wrzodów żołądka?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Wrzody żołądka są najczęściej spowodowane infekcją H. pylori lub stosowaniem NLPZ, a nie samym stresem.",
+    sources: [
+      "https://www.ncbi.nlm.nih.gov/books/NBK541042/"
+    ]
+  },
+  "Czy cukier powoduje nadpobudliwość u dzieci?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Badania nie potwierdzają bezpośredniego związku między spożyciem cukru a nadpobudliwością u dzieci.",
+    sources: [
+      "https://www.healthychildren.org/English/healthy-living/nutrition/Pages/Sugar-and-Children.aspx"
+    ]
+  },
+  "Czy kawa zawsze odwadnia organizm?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Umiarkowane spożycie kawy nie prowadzi do odwodnienia u zdrowych osób.",
+    sources: [
+      "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4462044/"
+    ]
+  },
+  "Czy maseczki chronią przed wirusami?": {
+    probability: 50,
+    truth: "Częściowo prawda",
+    explanation: "Maski redukują transmisję wirusów w niektórych sytuacjach, ale nie dają 100% ochrony. Ich skuteczność zależy od rodzaju maski i warunków użycia.",
+    sources: [
+      "https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/masks.html"
+    ]
+  },
+
+  // Technologia i środowisko
+  "Czy kuchenki mikrofalowe niszczą wartości odżywcze bardziej niż tradycyjne gotowanie?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Gotowanie w mikrofalówce zachowuje wartości odżywcze porównywalnie lub lepiej niż tradycyjne metody gotowania.",
+    sources: [
+      "https://www.healthline.com/nutrition/microwave-cooking"
+    ]
+  },
+  "Czy telefony komórkowe w standardowym użytkowaniu powodują nowotwory?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma naukowych dowodów, że normalne korzystanie z telefonów komórkowych powoduje nowotwory.",
+    sources: [
+      "https://www.who.int/news-room/q-a-detail/5g-mobile-networks-and-health"
+    ]
+  },
+  "Czy klimatyzacja bezpośrednio wywołuje choroby?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Klimatyzacja sama w sobie nie jest przyczyną chorób; problemy mogą wynikać z braku czyszczenia i filtracji.",
+    sources: [
+      "https://www.cdc.gov/healthywater/emergency/faq/air-conditioning.html"
+    ]
+  },
+  "Czy technologia 5G wpływa negatywnie na zdrowie?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma dowodów naukowych na to, że technologia 5G ma negatywny wpływ na zdrowie przy normalnym użytkowaniu.",
+    sources: [
+      "https://www.who.int/news-room/q-a-detail/5g-mobile-networks-and-health"
+    ]
+  }
+
+};
+
+function insertQuestion() {
+  const select = document.getElementById("topicSelect");
+  if (select.value) {
+    document.getElementById("questionInput").value = select.value;
+  }
+}
+
+// Gradient kolorów dla paska prawdziwości
+function getTruthColor(percent) {
+  if (percent <= 33) return "#ef4444";   // czerwony
+  if (percent <= 66) return "#f97316";   // pomarańcz
+  return "#22c55e";                      // zielony
+}
+
+// Formatuje JSON AI / predefiniowane odpowiedzi na HTML z paskiem oceny
+function formatAIResponseJSON(data) {
+  if (!data) return "";
+
+  const color = getTruthColor(data.probability || 0);
+  let html = `<div class="truth-score" style="background:${color};">Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})</div><br>`;
+
+  html += `<div style="line-height:1.6;font-size:15px;">`;
+  html += `<p>${data.explanation || ""}</p>`;
+
+  if (data.sources?.length) {
+    html += "<p><strong>Źródła:</strong></p><ul>";
+    data.sources.forEach(s => {
+      html += `<li><a href="${s}" target="_blank">${s}</a></li>`;
+    });
+    html += "</ul>";
+  }
+
+  html += "</div>";
+  return html;
+}
+
+async function verifyFact() {
+  const question = document.getElementById("questionInput").value;
+  const report = document.getElementById("report");
+  const loading = document.getElementById("loading");
+
+  if (!question.trim()) return;
+
+  loading.innerText = "Analiza...";
+  report.innerHTML = "";
+
+  // Sprawdzenie w bazie predefiniowanych odpowiedzi
+  if (predefinedAnswers[question]) {
+    report.innerHTML = formatAIResponseJSON(predefinedAnswers[question]);
+    loading.innerText = "";
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question })
     });
 
-    // Przewijanie i ustawienie kategorii w select
-    document.querySelectorAll('#iconMenu button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetCategory = btn.getAttribute('data-target'); // np. 'szczepienia'
-        const select = document.getElementById('mitSelect');
-        if (!select) return;
+    const data = await response.json();
+    loading.innerText = "";
 
-        // Przewijanie do select
-        select.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    report.innerHTML = formatAIResponseJSON(data);
 
-        // Znalezienie optgroup odpowiadającego kategorii i wybranie pierwszego option
-        for (let group of select.querySelectorAll('optgroup')) {
-          if (group.label.toLowerCase().includes(targetCategory.toLowerCase())) {
-            const firstOption = group.querySelector('option');
-            if (firstOption) {
-              select.value = firstOption.value || firstOption.text; // ustawia pierwszą opcję
-            }
-            break;
-          }
-        }
-
-        // Opcjonalnie fokus na select
-        select.focus();
-      });
-    });
-  </script>
+  } catch (err) {
+    loading.innerText = "";
+    report.innerText = "Błąd połączenia z serwerem.";
+  }
+}
+</script>
 
 </body>
 </html>
