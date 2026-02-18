@@ -100,6 +100,16 @@ a:hover { text-decoration: none; }
   <h1>Fakty i Mity: Zdrowie</h1>
   <div class="subtitle">Weryfikacja faktów i mitów medycznych w oparciu o dowody naukowe</div>
 <!-- MENU KATEGORII -->
+
+
+  <div id="iconMenu">
+  <button class="category-btn">Szczepienia</button>
+  <button class="category-btn">Leki</button>
+  <button class="category-btn">Żywienie</button>
+  <button class="category-btn">Choroby</button>
+  <button class="category-btn">Technologia</button>
+</div>
+
 <div id="iconMenu" class="flex justify-start gap-4 flex-wrap mt-6">
   <button data-target="Szczepienia" class="category-btn">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
@@ -143,13 +153,22 @@ a:hover { text-decoration: none; }
 </div>
 
 <style>
+
+  #iconMenu {
+  display: flex;          /* ustaw flexbox */
+  flex-direction: row;    /* elementy w jednym wierszu */
+  gap: 12px;              /* odstęp między przyciskami */
+  flex-wrap: wrap;        /* przechodzą do następnego wiersza, jeśli brak miejsca */
+  margin-top: 16px;
+}
+
 .category-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 80px;
+  width: 80px;            /* szerokość przycisku */
+  height: 80px;           /* wysokość przycisku */
   background: rgba(255,255,255,0.7);
   border-radius: 12px;
   gap: 4px;
@@ -159,14 +178,17 @@ a:hover { text-decoration: none; }
   transition: 0.2s;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
+
 .category-btn:hover {
   background: rgba(255,255,255,0.9);
   transform: translateY(-2px);
 }
+
 .category-btn svg {
   width: 24px;
   height: 24px;
 }
+
 #iconMenu {
   gap: 12px;
 }
