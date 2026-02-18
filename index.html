@@ -239,7 +239,7 @@ a:hover { text-decoration: none; }
 
 <script>
 // Kliknięcie ikony ustawia kategorię w select
-        document.querySelectorAll('#iconMenu button').forEach(btn => {
+    document.querySelectorAll('#iconMenu button').forEach(btn => {
   btn.addEventListener('click', () => {
     const category = btn.getAttribute('data-target');
     const select = document.getElementById('topicSelect');
@@ -249,11 +249,20 @@ a:hover { text-decoration: none; }
 
     for (let group of groups) {
       if (group.label === category) {
-        const firstOption = group.querySelector('option');
-        if (firstOption) {
-          select.value = firstOption.value;
-        }
-        select.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        const options = Array.from(group.querySelectorAll('option'))
+          .filter(opt => !opt.disabled);
+
+        if (options.length === 0) return;
+
+        const randomIndex = Math.floor(Math.random() * options.length);
+        const randomOption = options[randomIndex];
+
+        select.value = randomOption.value;
+
+        // jeśli masz listener na change
+        select.dispatchEvent(new Event('change'));
+
         break;
       }
     }
