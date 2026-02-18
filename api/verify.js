@@ -20,7 +20,8 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "openrouter/free",
         messages: [
-          { role: "system", content: "Jesteś specjalistą medycyny opartej na faktach (Evidence-Based Medicine). Odpowiadasz wyłącznie w oparciu o aktualny konsensus naukowy. Odpowiedź MUSI być JSON z: {\"truth\":\"Prawda lub Fałsz\", \"explanation\":\"wyjaśnienie\", \"sources\":[\"link1\",\"link2\"]}" },
+          { role: "system", content: `Jesteś ekspertem EBM. Odpowiedź MUSI być JSON:
+{"truth":"Prawda lub Fałsz", "explanation":"pełne wyjaśnienie", "sources":["link1","link2"]}` },
           { role: "user", content: question }
         ],
         temperature: 0.2
@@ -46,27 +47,27 @@ export default async function handler(req, res) {
     try {
       result = JSON.parse(aiText);
     } catch (e) {
+      // jeśli AI nie zwróci JSON → Fałsz
       result = {
-        truth: "Nieznana",
+        truth: "Fałsz",
         explanation: aiText,
         sources: []
       };
     }
 
-    // Ustal probability na podstawie truth
+    // Wymuszenie spójnego probability
     let probability = 50;
     if (result.truth === "Prawda") probability = 100;
     else if (result.truth === "Fałsz") probability = 0;
+    else probability = 50;
+
+    // Dodatkowa korekta: jeśli w explanation znajdują się typowe przeczenia, wymuszenie Fałsz
+    const negationKeywords = ["nie działają na", "nieprawda", "fałsz", "błędne"];
+    if (result.truth === "Prawda" && negationKeywords.some(k => result.explanation.toLowerCase().includes(k))) {
+      result.truth = "Fałsz";
+      probability = 0;
+    }
 
     res.status(200).json({
-      truth: result.truth || "Nieznana",
-      probability,
-      explanation: result.explanation || "",
-      sources: result.sources || []
-    });
-
-  } catch (err) {
-    console.error("Błąd API:", err);
-    res.status(500).json({ error: "Błąd serwera" });
-  }
-}
+      truth: result.truth,
+      probab
