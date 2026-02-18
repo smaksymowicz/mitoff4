@@ -1,65 +1,251 @@
-import fetch from "node-fetch";
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fakty i Mity: Zdrowie</title>
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  const { question } = req.body;
-  if (!question || question.trim() === "") return res.status(400).json({ error: "Brak pytania" });
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  if (!process.env.OPENROUTER_API_KEY) {
-    return res.status(500).json({ error: "Brak klucza API w Environment Variables" });
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #1f2937, #0f172a);
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #9ca3af;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  height: 110px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  resize: none;
+  font-size: 15px;
+  margin-bottom: 20px;
+  background: #111827;
+  color: white;
+}
+
+textarea:focus {
+  outline: 2px solid #6366f1;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: white;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+}
+
+.report {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #111827;
+  white-space: pre-line;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.loading {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  border: none;
+  background: #111827;
+  color: white;
+}
+
+.truth-score {
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: white;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+a { color: #6366f1; text-decoration: underline; }
+a:hover { text-decoration: none; }
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>Fakty i Mity: Zdrowie</h1>
+  <div class="subtitle">Weryfikacja informacji medycznych w oparciu o dowody naukowe</div>
+
+  <textarea id="questionInput" placeholder="Wpisz pytanie lub wybierz temat poniżej..."></textarea>
+
+  <select id="topicSelect" onchange="insertQuestion()">
+    <option value="">— Wybierz gotowe pytanie —</option>
+
+    <optgroup label="Szczepienia">
+      <option>Czy szczepionki powodują autyzm?</option>
+      <option>Czy szczepionki przeciążają układ odpornościowy dziecka?</option>
+      <option>Czy naturalne przechorowanie daje zawsze lepszą odporność niż szczepienie?</option>
+      <option>Czy szczepionki zawierają toksyczne dawki rtęci lub aluminium?</option>
+    </optgroup>
+
+    <optgroup label="Leki i terapie">
+      <option>Czy antybiotyki działają na infekcje wirusowe?</option>
+      <option>Czy witamina C leczy przeziębienie?</option>
+      <option>Czy leki przeciwbólowe zawsze niszczą wątrobę lub nerki?</option>
+      <option>Czy suplementy diety mogą zastąpić leczenie farmakologiczne?</option>
+      <option>Czy naturalne preparaty są zawsze bezpieczniejsze niż leki na receptę?</option>
+    </optgroup>
+
+    <optgroup label="Żywienie">
+      <option>Czy jedzenie po godzinie 18:00 powoduje przyrost masy ciała?</option>
+      <option>Czy gluten szkodzi każdemu?</option>
+      <option>Czy brązowy cukier jest zdrowszy niż biały?</option>
+      <option>Czy produkty 'light' zawsze sprzyjają odchudzaniu?</option>
+      <option>Czy picie ośmiu szklanek wody dziennie jest konieczne dla każdego?</option>
+      <option>Czy mleko jest niezbędne dorosłym dla zdrowych kości?</option>
+    </optgroup>
+
+    <optgroup label="Diety i 'detox'">
+      <option>Czy diety sokowe oczyszczają organizm z toksyn?</option>
+      <option>Czy organizm wymaga regularnego 'odkwaszania'?</option>
+      <option>Czy głodówki przyspieszają metabolizm?</option>
+      <option>Czy spalanie tłuszczu można ukierunkować na jedną część ciała ćwiczeniami?</option>
+    </optgroup>
+
+    <optgroup label="Choroby, odporność i profilaktyka">
+      <option>Czy zimne powietrze powoduje przeziębienie?</option>
+      <option>Czy stres jest bezpośrednią przyczyną wrzodów żołądka?</option>
+      <option>Czy cukier powoduje nadpobudliwość u dzieci?</option>
+      <option>Czy kawa zawsze odwadnia organizm?</option>
+      <option>Czy maseczki chronią przed wirusami?</option>
+    </optgroup>
+
+    <optgroup label="Technologia i środowisko">
+      <option>Czy kuchenki mikrofalowe niszczą wartości odżywcze bardziej niż tradycyjne gotowanie?</option>
+      <option>Czy telefony komórkowe w standardowym użytkowaniu powodują nowotwory?</option>
+      <option>Czy klimatyzacja bezpośrednio wywołuje choroby?</option>
+      <option>Czy technologia 5G wpływa negatywnie na zdrowie?</option>
+    </optgroup>
+
+  </select>
+
+  <button onclick="verifyFact()">Weryfikuj</button>
+
+  <div id="loading" class="loading"></div>
+  <div id="report" class="report"></div>
+</div>
+
+<script>
+function insertQuestion() {
+  const select = document.getElementById("topicSelect");
+  if (select.value) {
+    document.getElementById("questionInput").value = select.value;
+  }
+}
+
+// Gradient kolorów dla paska prawdziwości
+function getTruthColor(percent) {
+  if (percent <= 33) return "#ef4444";   // czerwony
+  if (percent <= 66) return "#f97316";   // pomarańcz
+  return "#22c55e";                      // zielony
+}
+
+// Formatuje JSON AI na HTML z paskiem oceny
+function formatAIResponseJSON(data) {
+  if (!data) return "";
+
+  const color = getTruthColor(data.probability || 0);
+  let html = `<div class="truth-score" style="background:${color};">Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})</div><br>`;
+
+  html += `<div style="line-height:1.6;font-size:15px;">`;
+  html += `<p>${data.explanation || ""}</p>`;
+
+  if (data.sources?.length) {
+    html += "<p><strong>Źródła:</strong></p><ul>";
+    data.sources.forEach(s => {
+      html += `<li><a href="${s}" target="_blank">${s}</a></li>`;
+    });
+    html += "</ul>";
   }
 
+  html += "</div>";
+  return html;
+}
+
+async function verifyFact() {
+  const question = document.getElementById("questionInput").value;
+  const report = document.getElementById("report");
+  const loading = document.getElementById("loading");
+
+  if (!question.trim()) return;
+
+  loading.innerText = "Analiza...";
+  report.innerHTML = "";
+
   try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    const response = await fetch("/api/verify", {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "openrouter/free",
-        messages: [
-          { role: "system", content: "Jesteś specjalistą medycyny opartej na faktach (Evidence-Based Medicine). Odpowiadasz wyłącznie w oparciu o aktualny konsensus naukowy. Struktura odpowiedzi musi być JSON w formacie: {\"truth\":\"Prawda lub Fałsz\", \"probability\":0-100, \"explanation\":\"tekst wyjaśnienia\", \"sources\":[\"link1\",\"link2\"]}." },
-          { role: "user", content: question }
-        ],
-        temperature: 0.2
-      })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question })
     });
 
     const data = await response.json();
+    loading.innerText = "";
 
-    // Wyciągnięcie treści AI
-    let aiText = "";
-    if (data.choices?.[0]?.message?.content) {
-      aiText = data.choices[0].message.content;
-    } else if (Array.isArray(data) && data[0]?.generated_text) {
-      aiText = data[0].generated_text;
-    } else if (data.output_text) {
-      aiText = data.output_text;
-    } else {
-      aiText = "Brak odpowiedzi z AI";
-      console.log("Odpowiedź OpenRouter:", JSON.stringify(data, null, 2));
-    }
-
-    // Spróbuj sparsować JSON z AI
-    let result;
-    try {
-      result = JSON.parse(aiText);
-    } catch (e) {
-      // Jeśli AI nie zwróciło poprawnego JSON, traktujemy całość jako wyjaśnienie i ustawiamy Fałsz 0%
-      result = {
-        truth: "Nieznana",
-        probability: 0,
-        explanation: aiText,
-        sources: []
-      };
-    }
-
-    res.status(200).json(result);
+    report.innerHTML = formatAIResponseJSON(data);
 
   } catch (err) {
-    console.error("Błąd API:", err);
-    res.status(500).json({ error: "Błąd serwera" });
+    loading.innerText = "";
+    report.innerText = "Błąd połączenia z serwerem.";
   }
 }
+</script>
+
+</body>
+</html>
