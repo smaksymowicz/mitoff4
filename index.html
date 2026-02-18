@@ -190,28 +190,8 @@ a:hover { text-decoration: none; }
   <div class="disclaimer">⚠️ Ta aplikacja bazuje na odpowiedziach sztucznej inteligencji i służy wyłącznie celom informacyjnym. W przypadku problemów zdrowotnych skonsultuj się z lekarzem.</div>
 </div>
 
-<script>
-// Predefiniowane odpowiedzi
-const predefinedAnswers = {
-  "Czy antybiotyki działają na infekcje wirusowe?": {
-    probability: 0,
-    truth: "Fałsz",
-    explanation: "Antybiotyki działają tylko na bakterie, nie na wirusy. Stosowanie ich w infekcjach wirusowych jest nieskuteczne i może prowadzić do oporności bakterii.",
-    sources: ["https://www.cdc.gov/antibiotic-use/index.html","https://www.who.int/news-room/fact-sheets/detail/antibiotic-resistance"]
-  },
-  "Czy szczepionki powodują autyzm?": {
-    probability: 0,
-    truth: "Fałsz",
-    explanation: "Nie ma dowodów naukowych na związek szczepionek z autyzmem. Badania obejmujące dziesiątki tysięcy dzieci jednoznacznie obalają tę hipotezę.",
-    sources: ["https://www.cdc.gov/vaccinesafety/concerns/autism.html","https://www.who.int/news-room/fact-sheets/detail/vaccine-safety"]
-  },
-  "Czy witamina C leczy przeziębienie?": {
-    probability: 0,
-    truth: "Fałsz",
-    explanation: "Regularne stosowanie witaminy C nie leczy przeziębienia ani go nie zapobiega u większości osób. Może jedynie minimalnie skrócić czas trwania objawów.",
-    sources: ["https://www.cochrane.org/CD000980/COMMON_c-vitamin-for-prevention-and-treatment-of-common-cold"]
-  }
-};
+<script type="module">
+import { predefinedAnswers } from './questions.js';
 
 function insertQuestion() {
   const select = document.getElementById("topicSelect");
@@ -220,51 +200,45 @@ function insertQuestion() {
   }
 }
 
-// Gradient kolorów dla paska prawdziwości
 function getTruthColor(percent) {
-  if (percent <= 33) return "#ef4444";   // czerwony
-  if (percent <= 66) return "#f97316";   // pomarańcz
-  return "#22c55e";                      // zielony
+  if (percent <= 33) return "#ef4444";
+  if (percent <= 66) return "#f97316";
+  return "#22c55e";
 }
 
-// Formatuje JSON AI / predefiniowane odpowiedzi na HTML z paskiem oceny
 function formatAIResponseJSON(data) {
   if (!data) return "";
-
   const color = getTruthColor(data.probability || 0);
-  let html = `<div class="truth-score" style="background:${color};">Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})</div><br>`;
-
+  let html = `<div class="truth-score" style="background:${color};">
+                Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})
+              </div><br>`;
   html += `<div style="line-height:1.6;font-size:15px;">`;
   html += `<p>${data.explanation || ""}</p>`;
-
   if (data.sources?.length) {
     html += "<p><strong>Źródła:</strong></p><ul>";
-    data.sources.forEach(s => {
-      html += `<li><a href="${s}" target="_blank">${s}</a></li>`;
-    });
+    data.sources.forEach(s => { html += `<li><a href="${s}" target="_blank">${s}</a></li>`; });
     html += "</ul>";
   }
-
   html += "</div>";
   return html;
 }
 
 async function verifyFact() {
-  const question = document.getElementById("questionInput").value;
+  const question = document.getElementById("questionInput").value.trim();
   const report = document.getElementById("report");
   const loading = document.getElementById("loading");
+  if (!question) return;
 
-  if (!question.trim()) return;
-
-  loading.innerText = "Analiza...";
-  report.innerHTML = "";
-
-  // Sprawdzenie w bazie predefiniowanych odpowiedzi
+  // najpierw sprawdzamy predefiniowane odpowiedzi
   if (predefinedAnswers[question]) {
     report.innerHTML = formatAIResponseJSON(predefinedAnswers[question]);
     loading.innerText = "";
     return;
   }
+
+  // jeśli brak w bazie, wywołujemy AI
+  loading.innerText = "Analiza...";
+  report.innerHTML = "";
 
   try {
     const response = await fetch("/api/verify", {
@@ -275,7 +249,6 @@ async function verifyFact() {
 
     const data = await response.json();
     loading.innerText = "";
-
     report.innerHTML = formatAIResponseJSON(data);
 
   } catch (err) {
@@ -284,6 +257,7 @@ async function verifyFact() {
   }
 }
 </script>
+
 
 </body>
 </html>
