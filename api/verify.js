@@ -37,7 +37,7 @@ export default async function handler(req, res) {
     } else if (data.output_text) {
       aiText = data.output_text;
     } else {
-      aiText = "Brak odpowiedzi z AI";
+      aiText = "Brak odpowiedzi z AI. Kliknij -Weryfikuj- ponownie";
       console.log("Odpowiedź OpenRouter:", JSON.stringify(data, null, 2));
     }
 
