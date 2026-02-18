@@ -12,11 +12,11 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #1f2937, #0f172a);
-  color: #e5e7eb;
+  background: #f4faff; /* jaśniejsze tło */
+  color: #1f2937;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
   padding: 20px;
 }
@@ -24,21 +24,21 @@ body {
 .container {
   width: 100%;
   max-width: 900px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(12px);
+  background: #ffffff;
   border-radius: 16px;
   padding: 40px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
 }
 
 h1 {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 10px;
+  color: #0f172a;
 }
 
 .subtitle {
-  color: #9ca3af;
+  color: #475569;
   margin-bottom: 30px;
   font-size: 14px;
 }
@@ -48,16 +48,16 @@ textarea {
   height: 110px;
   padding: 14px;
   border-radius: 12px;
-  border: none;
+  border: 1px solid #cbd5e1;
   resize: none;
   font-size: 15px;
   margin-bottom: 20px;
-  background: #111827;
-  color: white;
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 textarea:focus {
-  outline: 2px solid #6366f1;
+  outline: 2px solid #3b82f6;
 }
 
 button {
@@ -68,21 +68,22 @@ button {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, #3b82f6, #22c55e);
   color: white;
   transition: 0.2s ease;
 }
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+  box-shadow: 0 6px 20px rgba(59,130,246,0.3);
 }
 
 .report {
   margin-top: 30px;
   padding: 20px;
   border-radius: 12px;
-  background: #111827;
+  background: #e0f2fe;
+  color: #0f172a;
   white-space: pre-line;
   line-height: 1.6;
   font-size: 15px;
@@ -91,7 +92,7 @@ button:hover {
 .loading {
   margin-top: 20px;
   font-size: 14px;
-  color: #9ca3af;
+  color: #64748b;
 }
 
 select {
@@ -99,9 +100,9 @@ select {
   padding: 12px;
   margin-bottom: 20px;
   border-radius: 12px;
-  border: none;
-  background: #111827;
-  color: white;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 .truth-score {
@@ -113,13 +114,13 @@ select {
   margin-bottom: 5px;
 }
 
-a { color: #6366f1; text-decoration: underline; }
+a { color: #3b82f6; text-decoration: underline; }
 a:hover { text-decoration: none; }
 
 .disclaimer {
   margin-top: 40px;
   font-size: 13px;
-  color: #facc15;
+  color: #f59e0b;
 }
 </style>
 </head>
@@ -127,12 +128,12 @@ a:hover { text-decoration: none; }
 <body>
 <div class="container">
   <h1>Fakty i Mity: Zdrowie</h1>
-  <div class="subtitle">Weryfikacja faktów i mitów medycznych w oparciu o dowody naukowe</div>
+  <div class="subtitle">Weryfikacja informacji medycznych w oparciu o dowody naukowe</div>
 
-  <textarea id="questionInput" placeholder="Wpisz własne pytanie lub wybierz z listy poniżej..."></textarea>
+  <textarea id="questionInput" placeholder="Wpisz pytanie lub wybierz temat poniżej..."></textarea>
 
   <select id="topicSelect" onchange="insertQuestion()">
-    <option value="">-Sprawdź popularne mity: wybierz z listy-</option>
+    <option value="">— Wybierz gotowe pytanie —</option>
 
     <optgroup label="Szczepienia">
       <option>Czy szczepionki powodują autyzm?</option>
@@ -198,14 +199,12 @@ function insertQuestion() {
   }
 }
 
-// Gradient kolorów dla paska prawdziwości
 function getTruthColor(percent) {
   if (percent <= 33) return "#ef4444";   // czerwony
   if (percent <= 66) return "#f97316";   // pomarańcz
   return "#22c55e";                      // zielony
 }
 
-// Formatuje JSON AI na HTML z paskiem oceny
 function formatAIResponseJSON(data) {
   if (!data) return "";
 
