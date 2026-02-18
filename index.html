@@ -141,6 +141,18 @@ a:hover { text-decoration: none; }
     </svg>
     <span>Technologia</span>
   </button>
+
+  <button id="randomMythBtn" type="button" title="Losowy mit">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+    <circle cx="8" cy="8" r="1.5"></circle>
+    <circle cx="16" cy="8" r="1.5"></circle>
+    <circle cx="8" cy="16" r="1.5"></circle>
+    <circle cx="16" cy="16" r="1.5"></circle>
+    <circle cx="12" cy="12" r="1.5"></circle>
+  </svg>
+</button>
+
 </div>
 
 <style>
@@ -263,12 +275,30 @@ a:hover { text-decoration: none; }
         // jeśli masz listener na change
         select.dispatchEvent(new Event('change'));
 
+
+        
         break;
       }
     }
   });
 });
 
+// LOSOWY MIT
+
+document.getElementById('randomMythBtn')?.addEventListener('click', () => {
+  const select = document.getElementById('topicSelect');
+  if (!select) return;
+
+  const options = Array.from(select.querySelectorAll('option'))
+    .filter(opt => !opt.disabled && opt.value);
+
+  if (options.length === 0) return;
+
+  const randomIndex = Math.floor(Math.random() * options.length);
+  select.value = options[randomIndex].value;
+
+  select.dispatchEvent(new Event('change'));
+});
 // Predefiniowane odpowiedzi dla wszystkich pytań z listy rozwijanej
 const predefinedAnswers = {
   // Szczepienia
