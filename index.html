@@ -193,12 +193,14 @@ a:hover { text-decoration: none; }
 <script>
 // Predefiniowane odpowiedzi dla wszystkich pytań z listy rozwijanej
 const predefinedAnswers = {
+  const predefinedAnswers = {
   // Szczepienia
   "Czy szczepionki powodują autyzm?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie ma dowodów naukowych na związek szczepionek z autyzmem. Badania obejmujące dziesiątki tysięcy dzieci jednoznacznie obalają tę hipotezę.",
+    explanation: "Nie ma dowodów naukowych na związek szczepionek z autyzmem. Hipoteza ta została obalona i nie potwierdzono związku przyczynowego między szczepieniami a ASD. Szczepienia chronią przed ciężkimi chorobami zakaźnymi bez zwiększania ryzyka zaburzeń rozwojowych.",
     sources: [
+      "https://szczepienia.pzh.gov.pl/faq/gdzie-mozna-znalezc-dowody-na-brak-zwiazku-przyczynowego-pomiedzy-autyzmem-a-szczepieniami/",
       "https://www.cdc.gov/vaccinesafety/concerns/autism.html",
       "https://www.who.int/news-room/fact-sheets/detail/vaccine-safety"
     ]
@@ -206,27 +208,27 @@ const predefinedAnswers = {
   "Czy szczepionki przeciążają układ odpornościowy dziecka?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Układ odpornościowy dzieci jest w stanie prawidłowo reagować na szczepionki. Liczne badania wykazały, że szczepienia nie powodują przeciążenia odporności.",
+    explanation: "Układ odpornościowy dziecka jest w stanie prawidłowo reagować na szczepionki. Codzienny kontakt z antygenami z otoczenia jest dużo większy niż to, co zawierają szczepionki, więc nie dochodzi do przeciążenia układu odpornościowego.",
     sources: [
-      "https://www.cdc.gov/vaccinesafety/parents.html",
-      "https://www.who.int/news-room/fact-sheets/detail/vaccine-safety"
+      "https://szczepienia.pzh.gov.pl/wszystko-o-szczepieniach/jak-sie-bada-bezpieczenstwo-szczepionek/",
+      "https://www.cdc.gov/vaccinesafety/parents.html"
     ]
   },
   "Czy naturalne przechorowanie daje zawsze lepszą odporność niż szczepienie?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Szczepienia zapewniają ochronę bez ryzyka powikłań związanych z naturalnym zakażeniem. W wielu przypadkach odporność poszczepienna jest równie trwała lub lepsza.",
+    explanation: "Szczepienia zapewniają odporność bez ryzyka powikłań związanych z naturalnym zakażeniem. W wielu przypadkach odporność po szczepieniu jest trwała i bezpieczna, podczas gdy choroba może prowadzić do ciężkich następstw.",
     sources: [
-      "https://www.cdc.gov/vaccines/vac-gen/immunity.html",
+      "https://www.gov.pl/web/szczepimysie/dementujemy-nieprawdziwe-informacje",
       "https://www.who.int/news-room/fact-sheets/detail/immunization-coverage"
     ]
   },
   "Czy szczepionki zawierają toksyczne dawki rtęci lub aluminium?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Składniki szczepionek, w tym aluminium i tiomersal, występują w dawkach uznawanych za bezpieczne przez ekspertów i nie wywołują toksycznych efektów.",
+    explanation: "Składniki takie jak aluminium lub tiomersal w szczepionkach występują w minimalnych ilościach, które są uznawane za bezpieczne na podstawie badań. Nie wykazano szkodliwego wpływu tych ilości na zdrowie.",
     sources: [
-      "https://www.cdc.gov/vaccinesafety/concerns/thimerosal.html",
+      "https://szczepienia.pzh.gov.pl/faq/czy-szczepionki-z-tiomersalem-sa-bezpieczne-skad-to-wiemy/",
       "https://www.who.int/vaccine_safety/initiative/tools/Thimerosal_faqs.pdf"
     ]
   },
@@ -235,7 +237,7 @@ const predefinedAnswers = {
   "Czy antybiotyki działają na infekcje wirusowe?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Antybiotyki działają wyłącznie na bakterie, nie na wirusy. Stosowanie ich w infekcjach wirusowych jest nieskuteczne i może prowadzić do oporności bakterii.",
+    explanation: "Antybiotyki działają tylko na bakterie, nie na wirusy. Stosowanie antybiotyków w infekcjach wirusowych jest nieskuteczne i może prowadzić do wzrostu oporności bakterii.",
     sources: [
       "https://www.cdc.gov/antibiotic-use/index.html",
       "https://www.who.int/news-room/fact-sheets/detail/antibiotic-resistance"
@@ -244,15 +246,16 @@ const predefinedAnswers = {
   "Czy witamina C leczy przeziębienie?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Witamina C nie leczy przeziębienia ani nie zapobiega mu u większości osób. Może jedynie minimalnie skrócić czas trwania objawów.",
+    explanation: "Witamina C nie leczy przeziębienia ani go nie zapobiega w większości przypadków. Jest składnikiem odżywczym ważnym dla organizmu, ale jej suplementacja nie jest skuteczną terapią na przeziębienie.",
     sources: [
-      "https://www.cochrane.org/CD000980/COMMON_c-vitamin-for-prevention-and-treatment-of-common-cold"
+      "https://pzh.gov.pl/fakty-i-mity-na-temat-grypy/", 
+      "https://zdrowie.pap.pl/dieta/mit-ze-witamina-c-zapobiega-przeziebieniu"
     ]
   },
   "Czy leki przeciwbólowe zawsze niszczą wątrobę lub nerki?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Stosowanie leków przeciwbólowych w zalecanych dawkach jest bezpieczne. Ryzyko uszkodzenia wątroby lub nerek pojawia się przy przewlekłym nadużywaniu lub w przypadku istniejących chorób.",
+    explanation: "Stosowanie leków przeciwbólowych w zalecanych dawkach jest generalnie bezpieczne. Ryzyko uszkodzenia wątroby lub nerek rośnie przy przewlekłym nadużywaniu lub niewłaściwym stosowaniu.",
     sources: [
       "https://www.fda.gov/drugs/safe-use-analgesics",
       "https://www.ncbi.nlm.nih.gov/books/NBK547743/"
@@ -261,7 +264,7 @@ const predefinedAnswers = {
   "Czy suplementy diety mogą zastąpić leczenie farmakologiczne?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Suplementy nie zastępują leków przepisywanych przez lekarza. Mogą być uzupełnieniem diety, ale nie terapią chorób.",
+    explanation: "Suplementy diety nie są substytutem leczenia farmakologicznego przepisanego przez lekarza. Mogą uzupełniać dietę, ale nie leczą chorób.",
     sources: [
       "https://www.fda.gov/consumers/consumer-updates/dietary-supplements-fact-sheet",
       "https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
@@ -270,7 +273,7 @@ const predefinedAnswers = {
   "Czy naturalne preparaty są zawsze bezpieczniejsze niż leki na receptę?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Naturalność preparatu nie gwarantuje bezpieczeństwa. Leki receptowe przechodzą rygorystyczne badania kliniczne, podczas gdy suplementy mogą mieć skutki uboczne.",
+    explanation: "Naturalny preparat nie oznacza automatycznie bezpieczeństwa. Leki recepturowe są badane klinicznie, a suplementy mogą mieć skutki uboczne lub interakcje.",
     sources: [
       "https://www.who.int/news-room/fact-sheets/detail/traditional-complementary-and-integrative-medicine",
       "https://www.fda.gov/consumers/consumer-updates/herbal-supplements"
@@ -281,7 +284,7 @@ const predefinedAnswers = {
   "Czy jedzenie po godzinie 18:00 powoduje przyrost masy ciała?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie istnieje naukowy dowód, że jedzenie po 18:00 samo w sobie powoduje przyrost masy ciała. Liczy się całkowita liczba kalorii i aktywność fizyczna.",
+    explanation: "Nie ma naukowych dowodów, że samo jedzenie po 18:00 prowadzi do przyrostu masy. Bilans kaloryczny i styl życia są kluczowe dla wagi.",
     sources: [
       "https://www.nhs.uk/live-well/healthy-weight/eating-late-at-night/"
     ]
@@ -289,7 +292,7 @@ const predefinedAnswers = {
   "Czy gluten szkodzi każdemu?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Gluten jest szkodliwy tylko dla osób z celiakią lub nietolerancją glutenu. Dla większości populacji jest bezpieczny.",
+    explanation: "Gluten szkodzi tylko osobom z celiakią lub nietolerancją. Dla większości populacji gluten nie jest szkodliwy.",
     sources: [
       "https://www.celiac.org/gluten-free-living/what-is-gluten/"
     ]
@@ -297,7 +300,7 @@ const predefinedAnswers = {
   "Czy brązowy cukier jest zdrowszy niż biały?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Brązowy cukier nie różni się znacząco pod względem kaloryczności czy wpływu na zdrowie od białego cukru.",
+    explanation: "Brązowy i biały cukier mają podobny wpływ na zdrowie i kaloryczność. Różnice są minimalne.",
     sources: [
       "https://www.hsph.harvard.edu/nutritionsource/healthy-drinks/sugar/"
     ]
@@ -305,7 +308,7 @@ const predefinedAnswers = {
   "Czy produkty 'light' zawsze sprzyjają odchudzaniu?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Produkty 'light' nie gwarantują utraty wagi. Efekt zależy od całkowitego bilansu kalorycznego i stylu życia.",
+    explanation: "Produkty 'light' nie gwarantują utraty wagi. Efekt zależy od bilansu kalorycznego i ogólnej diety.",
     sources: [
       "https://www.eufic.org/en/whats-in-food/article/light-products"
     ]
@@ -313,7 +316,7 @@ const predefinedAnswers = {
   "Czy picie ośmiu szklanek wody dziennie jest konieczne dla każdego?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Zapotrzebowanie na wodę zależy od wieku, aktywności, klimatu i diety. 8 szklanek nie jest uniwersalną regułą.",
+    explanation: "Nie ma uniwersalnej reguły 8 szklanek dziennie. Ilość potrzebnej wody zależy od wieku, aktywności, klimatu i diety.",
     sources: [
       "https://www.nhs.uk/live-well/eat-well/water-drinks-nutrition/"
     ]
@@ -321,7 +324,7 @@ const predefinedAnswers = {
   "Czy mleko jest niezbędne dorosłym dla zdrowych kości?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Mleko nie jest jedynym źródłem wapnia i białka. Dieta zróżnicowana zapewnia wystarczające składniki odżywcze dla zdrowych kości.",
+    explanation: "Mleko nie jest jedynym źródłem wapnia i białka. Istnieją inne pokarmy i diety, które dostarczają składniki ważne dla zdrowia kości.",
     sources: [
       "https://ods.od.nih.gov/factsheets/Calcium-Consumer/",
       "https://www.who.int/news-room/fact-sheets/detail/healthy-diet"
@@ -332,7 +335,7 @@ const predefinedAnswers = {
   "Czy diety sokowe oczyszczają organizm z toksyn?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie ma dowodów, że diety sokowe usuwają toksyny z organizmu. Organizm samodzielnie detoksykuje wątrobą i nerkami.",
+    explanation: "Nie ma dowodów, że diety sokowe usuwają toksyny. Organizm sam reguluje detoksykację poprzez wątrobę i nerki.",
     sources: [
       "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5133120/"
     ]
@@ -340,7 +343,7 @@ const predefinedAnswers = {
   "Czy organizm wymaga regularnego 'odkwaszania'?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Koncepcja odkwaszania organizmu nie ma naukowego uzasadnienia. Organizm reguluje równowagę kwasowo-zasadową naturalnie.",
+    explanation: "Koncepcja odkwaszania nie ma naukowego uzasadnienia. Organizm utrzymuje równowagę kwasowo-zasadową naturalnie.",
     sources: [
       "https://www.healthline.com/nutrition/alkaline-diet-myth"
     ]
@@ -348,7 +351,7 @@ const predefinedAnswers = {
   "Czy głodówki przyspieszają metabolizm?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Głodówki mogą obniżać tempo metabolizmu w krótkim okresie. Nie ma dowodów na przyspieszenie metabolizmu w długiej perspektywie.",
+    explanation: "Głodówki raczej obniżają tempo metabolizmu. Nie przyspieszają metabolizmu w długiej perspektywie.",
     sources: [
       "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3946160/"
     ]
@@ -356,7 +359,7 @@ const predefinedAnswers = {
   "Czy spalanie tłuszczu można ukierunkować na jedną część ciała ćwiczeniami?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie da się lokalnie spalić tłuszczu wyłącznie ćwiczeniami. Redukcja tkanki tłuszczowej jest ogólna i zależy od bilansu kalorycznego.",
+    explanation: "Nie da się lokalnie spalić tłuszczu ćwiczeniami. Redukcja tkanki tłuszczowej odbywa się ogólnie poprzez bilans kaloryczny.",
     sources: [
       "https://www.health.harvard.edu/staying-healthy/does-spot-reducing-fat-really-work"
     ]
@@ -366,7 +369,7 @@ const predefinedAnswers = {
   "Czy zimne powietrze powoduje przeziębienie?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Przeziębienie wywołują wirusy, a nie temperatura powietrza. Chłód może zwiększać podatność, ale nie jest przyczyną infekcji.",
+    explanation: "Przeziębienie wywołują wirusy, a nie sama temperatura. Chłód może ułatwiać przenoszenie wirusów w tłoczonych pomieszczeniach.",
     sources: [
       "https://www.cdc.gov/flu/about/prevention.htm"
     ]
@@ -374,7 +377,7 @@ const predefinedAnswers = {
   "Czy stres jest bezpośrednią przyczyną wrzodów żołądka?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Wrzody żołądka są głównie spowodowane infekcją H. pylori lub stosowaniem NLPZ. Stres może nasilać objawy, ale nie jest główną przyczyną.",
+    explanation: "Wrzody żołądka są najczęściej spowodowane infekcją H. pylori lub stosowaniem NLPZ, a nie samym stresem.",
     sources: [
       "https://www.ncbi.nlm.nih.gov/books/NBK541042/"
     ]
@@ -382,7 +385,7 @@ const predefinedAnswers = {
   "Czy cukier powoduje nadpobudliwość u dzieci?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie ma dowodów na bezpośredni związek między spożyciem cukru a nadpobudliwością u dzieci.",
+    explanation: "Badania nie potwierdzają bezpośredniego związku między spożyciem cukru a nadpobudliwością u dzieci.",
     sources: [
       "https://www.healthychildren.org/English/healthy-living/nutrition/Pages/Sugar-and-Children.aspx"
     ]
@@ -390,7 +393,7 @@ const predefinedAnswers = {
   "Czy kawa zawsze odwadnia organizm?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Umiarkowane spożycie kawy nie powoduje odwodnienia u osób zdrowych.",
+    explanation: "Umiarkowane spożycie kawy nie prowadzi do odwodnienia u zdrowych osób.",
     sources: [
       "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4462044/"
     ]
@@ -398,7 +401,7 @@ const predefinedAnswers = {
   "Czy maseczki chronią przed wirusami?": {
     probability: 50,
     truth: "Częściowo prawda",
-    explanation: "Maski skutecznie redukują transmisję wirusów w niektórych warunkach, ale nie gwarantują pełnej ochrony.",
+    explanation: "Maski redukują transmisję wirusów w niektórych sytuacjach, ale nie dają 100% ochrony. Ich skuteczność zależy od rodzaju maski i warunków użycia.",
     sources: [
       "https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/masks.html"
     ]
@@ -408,7 +411,7 @@ const predefinedAnswers = {
   "Czy kuchenki mikrofalowe niszczą wartości odżywcze bardziej niż tradycyjne gotowanie?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Gotowanie w mikrofalówce zachowuje wartości odżywcze porównywalnie lub lepiej niż gotowanie tradycyjne.",
+    explanation: "Gotowanie w mikrofalówce zachowuje wartości odżywcze porównywalnie lub lepiej niż tradycyjne metody gotowania.",
     sources: [
       "https://www.healthline.com/nutrition/microwave-cooking"
     ]
@@ -416,15 +419,15 @@ const predefinedAnswers = {
   "Czy telefony komórkowe w standardowym użytkowaniu powodują nowotwory?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie ma dowodów naukowych na to, że umiarkowane korzystanie z telefonów komórkowych powoduje nowotwory.",
+    explanation: "Nie ma naukowych dowodów, że normalne korzystanie z telefonów komórkowych powoduje nowotwory.",
     sources: [
-      "https://www.who.int/news-room/fact-sheets/detail/electromagnetic-fields-and-public-health-mobile-phones"
+      "https://www.who.int/news-room/q-a-detail/5g-mobile-networks-and-health"
     ]
   },
   "Czy klimatyzacja bezpośrednio wywołuje choroby?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Klimatyzacja sama w sobie nie wywołuje chorób. Nieprawidłowe utrzymanie może sprzyjać rozwojowi drobnoustrojów, ale nie jest główną przyczyną infekcji.",
+    explanation: "Klimatyzacja sama w sobie nie jest przyczyną chorób; problemy mogą wynikać z braku czyszczenia i filtracji.",
     sources: [
       "https://www.cdc.gov/healthywater/emergency/faq/air-conditioning.html"
     ]
@@ -432,11 +435,12 @@ const predefinedAnswers = {
   "Czy technologia 5G wpływa negatywnie na zdrowie?": {
     probability: 0,
     truth: "Fałsz",
-    explanation: "Nie ma dowodów naukowych na szkodliwość technologii 5G przy normalnym użytkowaniu.",
+    explanation: "Nie ma dowodów naukowych na to, że technologia 5G ma negatywny wpływ na zdrowie przy normalnym użytkowaniu.",
     sources: [
       "https://www.who.int/news-room/q-a-detail/5g-mobile-networks-and-health"
     ]
   }
+
 };
 
 function insertQuestion() {
