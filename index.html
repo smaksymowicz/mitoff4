@@ -595,7 +595,7 @@ function formatAIResponseJSON(data) {
   if (!data) return "";
 
   const color = getTruthColor(data.probability || 0);
-  let html = `<div class="truth-score" style="background:${color};">Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})</div><br>`;
+  let html = `<div class="truth-score" style="background:${color};">Ocena prawdziwości: ${data.truth || "Nieznana"}</div><br>`;
 
   html += `<div style="line-height:1.6;font-size:15px;">`;
   html += `<p>${data.explanation || ""}</p>`;
