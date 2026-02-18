@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "openrouter/free",
         messages: [
-          { role: "system", content: "Jesteś specjalistą medycyny opartej na faktach (Evidence-Based Medicine). Odpowiadasz wyłącznie w oparciu o aktualny konsensus naukowy. Struktura odpowiedzi musi być JSON w formacie: {\"truth\":\"Prawda lub Fałsz\", \"probability\":0-100, \"explanation\":\"tekst wyjaśnienia\", \"sources\":[\"link1\",\"link2\"]}." },
+          { role: "system", content: "Jesteś specjalistą medycyny opartej na faktach (Evidence-Based Medicine). Odpowiadasz wyłącznie w oparciu o aktualny konsensus naukowy. Odpowiedź MUSI być JSON z: {\"truth\":\"Prawda lub Fałsz\", \"explanation\":\"wyjaśnienie\", \"sources\":[\"link1\",\"link2\"]}" },
           { role: "user", content: question }
         ],
         temperature: 0.2
@@ -29,7 +29,6 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // Wyciągnięcie treści AI
     let aiText = "";
     if (data.choices?.[0]?.message?.content) {
       aiText = data.choices[0].message.content;
@@ -42,21 +41,29 @@ export default async function handler(req, res) {
       console.log("Odpowiedź OpenRouter:", JSON.stringify(data, null, 2));
     }
 
-    // Spróbuj sparsować JSON z AI
+    // Parsowanie JSON
     let result;
     try {
       result = JSON.parse(aiText);
     } catch (e) {
-      // Jeśli AI nie zwróciło poprawnego JSON, traktujemy całość jako wyjaśnienie i ustawiamy Fałsz 0%
       result = {
         truth: "Nieznana",
-        probability: 0,
         explanation: aiText,
         sources: []
       };
     }
 
-    res.status(200).json(result);
+    // Ustal probability na podstawie truth
+    let probability = 50;
+    if (result.truth === "Prawda") probability = 100;
+    else if (result.truth === "Fałsz") probability = 0;
+
+    res.status(200).json({
+      truth: result.truth || "Nieznana",
+      probability,
+      explanation: result.explanation || "",
+      sources: result.sources || []
+    });
 
   } catch (err) {
     console.error("Błąd API:", err);
