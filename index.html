@@ -112,8 +112,15 @@ select {
   display: inline-block;
   margin-bottom: 5px;
 }
+
 a { color: #6366f1; text-decoration: underline; }
 a:hover { text-decoration: none; }
+
+.disclaimer {
+  margin-top: 40px;
+  font-size: 13px;
+  color: #facc15;
+}
 </style>
 </head>
 
@@ -125,7 +132,7 @@ a:hover { text-decoration: none; }
   <textarea id="questionInput" placeholder="Wpisz pytanie lub wybierz temat poniżej..."></textarea>
 
   <select id="topicSelect" onchange="insertQuestion()">
-    <option value="">— Wybierz gotowe pytanie —</option>
+    <option value="">— Popularne mity - wybierz z listy —</option>
 
     <optgroup label="Szczepienia">
       <option>Czy szczepionki powodują autyzm?</option>
@@ -179,6 +186,8 @@ a:hover { text-decoration: none; }
 
   <div id="loading" class="loading"></div>
   <div id="report" class="report"></div>
+
+  <div class="disclaimer">⚠️ Ta aplikacja bazuje na odpowiedziach sztucznej inteligencji i służy wyłącznie celom informacyjnym. W przypadku problemów zdrowotnych skonsultuj się z lekarzem.</div>
 </div>
 
 <script>
