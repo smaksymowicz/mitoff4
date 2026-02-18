@@ -101,9 +101,6 @@ a:hover { text-decoration: none; }
   <div class="subtitle">Weryfikacja faktów i mitów medycznych w oparciu o dowody naukowe</div>
 <!-- MENU KATEGORII -->
 
-
-
-
 <div id="iconMenu" class="flex justify-start gap-4 flex-wrap mt-6">
   <button data-target="Szczepienia" class="category-btn">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
@@ -184,7 +181,7 @@ a:hover { text-decoration: none; }
 }
 
 #iconMenu {
-  gap: 24px;
+  gap: 12px;
 }
 </style>
 
@@ -242,14 +239,20 @@ a:hover { text-decoration: none; }
 
 <script>
 // Kliknięcie ikony ustawia kategorię w select
-document.querySelectorAll('#iconMenu button').forEach(btn => {
+        document.querySelectorAll('#iconMenu button').forEach(btn => {
   btn.addEventListener('click', () => {
     const category = btn.getAttribute('data-target');
     const select = document.getElementById('topicSelect');
     if (!select) return;
-    for (let group of select.querySelectorAll('optgroup')) {
+
+    const groups = select.querySelectorAll('optgroup');
+
+    for (let group of groups) {
       if (group.label === category) {
-        select.selectedIndex = Array.from(select.children).indexOf(group);
+        const firstOption = group.querySelector('option');
+        if (firstOption) {
+          select.value = firstOption.value;
+        }
         select.scrollIntoView({ behavior: 'smooth', block: 'start' });
         break;
       }
