@@ -9,49 +9,57 @@
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #e0f2f1, #b2dfdb);
-  color: #111827;
+  background: radial-gradient(circle at top, #1f2937, #0f172a);
+  color: #e5e7eb;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 20px;
 }
+
 .container {
   width: 100%;
   max-width: 900px;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.05);
   backdrop-filter: blur(12px);
   border-radius: 16px;
   padding: 40px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
+
 h1 {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 10px;
-  color: #00695c;
 }
+
 .subtitle {
-  color: #004d40;
+  color: #9ca3af;
   margin-bottom: 30px;
   font-size: 14px;
 }
+
 textarea {
   width: 100%;
   height: 110px;
   padding: 14px;
   border-radius: 12px;
-  border: 1px solid #004d40;
+  border: none;
   resize: none;
   font-size: 15px;
   margin-bottom: 20px;
-  background: #e0f2f1;
-  color: #004d40;
+  background: #111827;
+  color: white;
 }
-textarea:focus { outline: 2px solid #26a69a; }
+
+textarea:focus {
+  outline: 2px solid #6366f1;
+}
+
 button {
   width: 100%;
   padding: 14px;
@@ -60,33 +68,42 @@ button {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  background: linear-gradient(90deg, #26a69a, #00796b);
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
   color: white;
   transition: 0.2s ease;
 }
+
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(38,166,154,0.4);
+  box-shadow: 0 6px 20px rgba(99,102,241,0.4);
 }
+
 .report {
   margin-top: 30px;
   padding: 20px;
   border-radius: 12px;
-  background: #b2dfdb;
+  background: #111827;
   white-space: pre-line;
   line-height: 1.6;
   font-size: 15px;
 }
-.loading { margin-top: 20px; font-size: 14px; color: #004d40; }
+
+.loading {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
 select {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
   border-radius: 12px;
-  border: 1px solid #004d40;
-  background: #e0f2f1;
-  color: #004d40;
+  border: none;
+  background: #111827;
+  color: white;
 }
+
 .truth-score {
   padding: 12px;
   border-radius: 12px;
@@ -95,12 +112,14 @@ select {
   display: inline-block;
   margin-bottom: 5px;
 }
-a { color: #00796b; text-decoration: underline; }
+
+a { color: #6366f1; text-decoration: underline; }
 a:hover { text-decoration: none; }
+
 .disclaimer {
   margin-top: 40px;
   font-size: 13px;
-  color: #004d40;
+  color: #facc15;
 }
 </style>
 </head>
@@ -114,12 +133,14 @@ a:hover { text-decoration: none; }
 
   <select id="topicSelect" onchange="insertQuestion()">
     <option value="">-Sprawdź popularne mity: wybierz z listy-</option>
+
     <optgroup label="Szczepienia">
       <option>Czy szczepionki powodują autyzm?</option>
       <option>Czy szczepionki przeciążają układ odpornościowy dziecka?</option>
       <option>Czy naturalne przechorowanie daje zawsze lepszą odporność niż szczepienie?</option>
       <option>Czy szczepionki zawierają toksyczne dawki rtęci lub aluminium?</option>
     </optgroup>
+
     <optgroup label="Leki i terapie">
       <option>Czy antybiotyki działają na infekcje wirusowe?</option>
       <option>Czy witamina C leczy przeziębienie?</option>
@@ -127,6 +148,7 @@ a:hover { text-decoration: none; }
       <option>Czy suplementy diety mogą zastąpić leczenie farmakologiczne?</option>
       <option>Czy naturalne preparaty są zawsze bezpieczniejsze niż leki na receptę?</option>
     </optgroup>
+
     <optgroup label="Żywienie">
       <option>Czy jedzenie po godzinie 18:00 powoduje przyrost masy ciała?</option>
       <option>Czy gluten szkodzi każdemu?</option>
@@ -135,12 +157,14 @@ a:hover { text-decoration: none; }
       <option>Czy picie ośmiu szklanek wody dziennie jest konieczne dla każdego?</option>
       <option>Czy mleko jest niezbędne dorosłym dla zdrowych kości?</option>
     </optgroup>
+
     <optgroup label="Diety i 'detox'">
       <option>Czy diety sokowe oczyszczają organizm z toksyn?</option>
       <option>Czy organizm wymaga regularnego 'odkwaszania'?</option>
       <option>Czy głodówki przyspieszają metabolizm?</option>
       <option>Czy spalanie tłuszczu można ukierunkować na jedną część ciała ćwiczeniami?</option>
     </optgroup>
+
     <optgroup label="Choroby, odporność i profilaktyka">
       <option>Czy zimne powietrze powoduje przeziębienie?</option>
       <option>Czy stres jest bezpośrednią przyczyną wrzodów żołądka?</option>
@@ -148,12 +172,14 @@ a:hover { text-decoration: none; }
       <option>Czy kawa zawsze odwadnia organizm?</option>
       <option>Czy maseczki chronią przed wirusami?</option>
     </optgroup>
+
     <optgroup label="Technologia i środowisko">
       <option>Czy kuchenki mikrofalowe niszczą wartości odżywcze bardziej niż tradycyjne gotowanie?</option>
       <option>Czy telefony komórkowe w standardowym użytkowaniu powodują nowotwory?</option>
       <option>Czy klimatyzacja bezpośrednio wywołuje choroby?</option>
       <option>Czy technologia 5G wpływa negatywnie na zdrowie?</option>
     </optgroup>
+
   </select>
 
   <button onclick="verifyFact()">Weryfikuj</button>
@@ -164,53 +190,81 @@ a:hover { text-decoration: none; }
   <div class="disclaimer">⚠️ Ta aplikacja bazuje na odpowiedziach sztucznej inteligencji i służy wyłącznie celom informacyjnym. W przypadku problemów zdrowotnych skonsultuj się z lekarzem.</div>
 </div>
 
-<script type="module">
-import { predefinedAnswers } from './questions.js';
+<script>
+// Predefiniowane odpowiedzi
+const predefinedAnswers = {
+  "Czy antybiotyki działają na infekcje wirusowe?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Antybiotyki działają tylko na bakterie, nie na wirusy. Stosowanie ich w infekcjach wirusowych jest nieskuteczne i może prowadzić do oporności bakterii.",
+    sources: ["https://www.cdc.gov/antibiotic-use/index.html","https://www.who.int/news-room/fact-sheets/detail/antibiotic-resistance"]
+  },
+  "Czy szczepionki powodują autyzm?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Nie ma dowodów naukowych na związek szczepionek z autyzmem. Badania obejmujące dziesiątki tysięcy dzieci jednoznacznie obalają tę hipotezę.",
+    sources: ["https://www.cdc.gov/vaccinesafety/concerns/autism.html","https://www.who.int/news-room/fact-sheets/detail/vaccine-safety"]
+  },
+  "Czy witamina C leczy przeziębienie?": {
+    probability: 0,
+    truth: "Fałsz",
+    explanation: "Regularne stosowanie witaminy C nie leczy przeziębienia ani go nie zapobiega u większości osób. Może jedynie minimalnie skrócić czas trwania objawów.",
+    sources: ["https://www.cochrane.org/CD000980/COMMON_c-vitamin-for-prevention-and-treatment-of-common-cold"]
+  }
+};
 
 function insertQuestion() {
   const select = document.getElementById("topicSelect");
-  if (select.value) document.getElementById("questionInput").value = select.value;
+  if (select.value) {
+    document.getElementById("questionInput").value = select.value;
+  }
 }
 
+// Gradient kolorów dla paska prawdziwości
 function getTruthColor(percent) {
-  if (percent <= 33) return "#ef4444";
-  if (percent <= 66) return "#f97316";
-  return "#22c55e";
+  if (percent <= 33) return "#ef4444";   // czerwony
+  if (percent <= 66) return "#f97316";   // pomarańcz
+  return "#22c55e";                      // zielony
 }
 
+// Formatuje JSON AI / predefiniowane odpowiedzi na HTML z paskiem oceny
 function formatAIResponseJSON(data) {
   if (!data) return "";
+
   const color = getTruthColor(data.probability || 0);
-  let html = `<div class="truth-score" style="background:${color};">
-                Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})
-              </div><br>`;
+  let html = `<div class="truth-score" style="background:${color};">Ocena prawdziwości: ${data.probability || 0}% (${data.truth || "Nieznana"})</div><br>`;
+
   html += `<div style="line-height:1.6;font-size:15px;">`;
   html += `<p>${data.explanation || ""}</p>`;
+
   if (data.sources?.length) {
     html += "<p><strong>Źródła:</strong></p><ul>";
-    data.sources.forEach(s => { html += `<li><a href="${s}" target="_blank">${s}</a></li>`; });
+    data.sources.forEach(s => {
+      html += `<li><a href="${s}" target="_blank">${s}</a></li>`;
+    });
     html += "</ul>";
   }
+
   html += "</div>";
   return html;
 }
 
 async function verifyFact() {
-  const question = document.getElementById("questionInput").value.trim();
+  const question = document.getElementById("questionInput").value;
   const report = document.getElementById("report");
   const loading = document.getElementById("loading");
-  if (!question) return;
 
-  // najpierw sprawdzamy predefiniowane odpowiedzi
+  if (!question.trim()) return;
+
+  loading.innerText = "Analiza...";
+  report.innerHTML = "";
+
+  // Sprawdzenie w bazie predefiniowanych odpowiedzi
   if (predefinedAnswers[question]) {
     report.innerHTML = formatAIResponseJSON(predefinedAnswers[question]);
     loading.innerText = "";
     return;
   }
-
-  // jeśli brak w bazie, wywołujemy AI
-  loading.innerText = "Analiza...";
-  report.innerHTML = "";
 
   try {
     const response = await fetch("/api/verify", {
@@ -221,6 +275,7 @@ async function verifyFact() {
 
     const data = await response.json();
     loading.innerText = "";
+
     report.innerHTML = formatAIResponseJSON(data);
 
   } catch (err) {
@@ -229,5 +284,6 @@ async function verifyFact() {
   }
 }
 </script>
+
 </body>
 </html>
