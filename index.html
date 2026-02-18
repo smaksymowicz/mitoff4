@@ -171,13 +171,15 @@ a:hover { text-decoration: none; }
 
 <style>
 
+
   #iconMenu {
-  display: flex;          /* ustaw flexbox */
-  flex-direction: row;    /* elementy w jednym wierszu */
-  gap: 12px;              /* odstęp między przyciskami */
-  flex-wrap: wrap;        /* przechodzą do następnego wiersza, jeśli brak miejsca */
+  display: flex;
+  flex-wrap: wrap;         /* zawijanie wierszy */
+  justify-content: center; /* centrowanie przycisków w rzędzie */
+  gap: 12px;
   margin-top: 16px;
 }
+
 
 .category-btn {
   display: flex;
