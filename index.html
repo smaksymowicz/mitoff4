@@ -767,6 +767,7 @@ function startQuiz() {
   html += `<button onclick="finishQuiz()" class="mt-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white">Sprawdź swoje odpowiedzi</button>`;
 
   document.querySelector(".report").innerHTML = html;
+  document.querySelector(".report").scrollIntoView({ behavior: 'smooth' });
 }
 
 // =====================
@@ -818,6 +819,7 @@ function finishQuiz() {
   `;
 
   document.querySelector(".report").innerHTML = html;
+  document.querySelector(".report").scrollIntoView({ behavior: 'smooth' });
 }
 
 
