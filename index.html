@@ -726,7 +726,7 @@ function startQuiz() {
   userAnswers = [];
   quizQuestions = shuffle([...questionPool]).slice(0, 10);
 
-  let html = `<h3>Quiz: Prawda czy Fałsz?</h3>`;
+  let html = `<h2>Quiz: Prawda czy Fałsz?</h2><br><h3>Sprawdź swoją wiedzę na temat mitów zdrowotnych!</h3>`;
 
   quizQuestions.forEach((q, index) => {
     html += `
