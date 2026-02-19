@@ -792,14 +792,11 @@ function finishQuiz() {
     if (isCorrect) correctCount++;
 
     html += `
-      <div style="
-        padding:8px; 
-        margin-bottom:12px; 
-        border-radius:6px; 
-        background:${isCorrect ? '#d1fae5' : '#fee2e2'};
-      ">
+      <div style="padding:8px; margin-bottom:12px; border-radius:6px;">
         <strong>${index + 1}. ${q.question}</strong><br>
-        Twoja odpowiedź: <strong>${userAnswer === true ? 'Prawda' : userAnswer === false ? 'Fałsz' : 'Brak odpowiedzi'}</strong><br>
+        Twoja odpowiedź: <strong style="color:${isCorrect ? 'green' : 'red'};">
+          ${userAnswer === true ? 'Prawda' : userAnswer === false ? 'Fałsz' : 'Brak odpowiedzi'}
+        </strong><br>
         Poprawna odpowiedź: <strong>${q.correct ? 'Prawda' : 'Fałsz'}</strong><br>
         Wyjaśnienie: ${q.explanation}
       </div>
@@ -811,7 +808,7 @@ function finishQuiz() {
   html = `<h3>Wynik: ${correctCount}/10</h3>
           <p>Twoja zdolność oceny mitów zdrowotnych: <strong>${scoreScale}/10</strong></p>` + html;
 
-  // Dodaj przyciski powtórzenia i zakończenia quizu
+  // przyciski powtórzenia i zakończenia quizu
   html += `
     <div style="text-align:center; margin-top:16px;">
       <button onclick="startQuiz()" style="padding:8px 20px; border-radius:6px; background:#10b981; color:white; cursor:pointer; margin-right:8px;">Sprawdź swoją wiedzę ponownie</button>
@@ -821,6 +818,7 @@ function finishQuiz() {
 
   document.querySelector(".report").innerHTML = html;
 }
+
 
 </script>
 
