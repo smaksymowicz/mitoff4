@@ -730,35 +730,36 @@ function startQuiz() {
 
   quizQuestions.forEach((q, index) => {
     html += `
-      <div style=""margin-bottom:20px; text-align:center;">
+    <div style="margin-bottom:24px; text-align:center;">
         <strong>${index + 1}. ${q.question}</strong><br>
-  
 
-        <div style="display:inline-flex; gap:8px; justify-content:center; margin-top:8px;">
+        <div style="display:inline-flex; gap:12px; justify-content:center; margin-top:12px;">
           <!-- PRAWDA -->
           <div style="text-align:center;">
             <button onclick="answerQuestion(${index}, true)" 
-              style="width:36px; height:36px; padding:4px; background:#1f2937; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
+              style="width:72px; height:72px; padding:6px; background:#1f2937; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s;"
+              onmouseover="this.style.background='#d1fae5';" onmouseout="this.style.background='#1f2937';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </button>
-            <div style="font-size:10px; margin-top:2px;">Prawda</div>
+            <div style="font-size:12px; margin-top:4px; font-weight:500;">Prawda</div>
           </div>
 
           <!-- FAŁSZ -->
           <div style="text-align:center;">
             <button onclick="answerQuestion(${index}, false)" 
-              style="width:36px; height:36px; padding:4px; background:#1f2937; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="2">
+              style="width:72px; height:72px; padding:6px; background:#1f2937; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s;"
+              onmouseover="this.style.background='#fee2e2';" onmouseout="this.style.background='#1f2937';">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <div style="font-size:10px; margin-top:2px;">Fałsz</div>
+            <div style="font-size:12px; margin-top:4px; font-weight:500;">Fałsz</div>
           </div>
         </div>
 
-        <div id="feedback-${index}" style="margin-top:4px;"></div>
+        <div id="feedback-${index}" style="margin-top:6px;"></div>
       </div>
     `;
   });
