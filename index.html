@@ -734,25 +734,31 @@ function startQuiz() {
         <strong>${index + 1}. ${q.question}</strong><br>
   
 
-        <div class="flex justify-center gap-4 mt-2">
-          <!-- PRZYCISK PRAWDA -->
-          <button onclick="answerQuestion(${index}, true)" class="flex flex-col items-center justify-center w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded transition-all p-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="text-[10px] mt-0.5">Prawda</span>
-          </button>
+        <div style="display:inline-flex; gap:8px; justify-content:center; margin-top:8px;">
+          <!-- PRAWDA -->
+          <div style="text-align:center;">
+            <button onclick="answerQuestion(${index}, true)" 
+              style="width:36px; height:36px; padding:4px; background:#1f2937; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </button>
+            <div style="font-size:10px; margin-top:2px;">Prawda</div>
+          </div>
 
-          <!-- PRZYCISK FAŁSZ -->
-          <button onclick="answerQuestion(${index}, false)" class="flex flex-col items-center justify-center w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded transition-all p-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            <span class="text-[10px] mt-0.5">Fałsz</span>
-          </button>
+          <!-- FAŁSZ -->
+          <div style="text-align:center;">
+            <button onclick="answerQuestion(${index}, false)" 
+              style="width:36px; height:36px; padding:4px; background:#1f2937; border-radius:6px; display:flex; align-items:center; justify-content:center; cursor:pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div style="font-size:10px; margin-top:2px;">Fałsz</div>
+          </div>
         </div>
-        
-        <div id="feedback-${index}"></div>
+
+        <div id="feedback-${index}" style="margin-top:4px;"></div>
       </div>
     `;
   });
