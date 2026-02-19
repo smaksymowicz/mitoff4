@@ -733,7 +733,7 @@ function startQuiz() {
     <div style="margin-bottom:0px;">
         <strong>${index + 1}. ${q.question}</strong>
 
-        <div style="display:inline-flex; gap:6px; justify-content:center; margin-top:0px;">
+        <div style="display:flex; flex-direction:row; gap:6px; justify-content:center; align-items:flex-start;">
           <!-- PRAWDA -->
           <div style="text-align:center;">
             <button onclick="answerQuestion(${index}, true)" 
@@ -743,7 +743,7 @@ function startQuiz() {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </button>
-            <div style="font-size:12px; margin-top:4px; font-weight:500;">Prawda</div>
+            <div style="font-size:12px; margin-top:2px; font-weight:500;">Prawda</div>
           </div>
 
           <!-- FAŁSZ -->
@@ -755,7 +755,7 @@ function startQuiz() {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <div style="font-size:12px; margin-top:4px; font-weight:500;">Fałsz</div>
+            <div style="font-size:12px; margin-top:2px; font-weight:500;">Fałsz</div>
           </div>
         </div>
 
