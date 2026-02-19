@@ -783,35 +783,34 @@ function answerQuestion(index, answer) {
 // =====================
 function finishQuiz() {
   let correctCount = 0;
-  let mistakes = "";
+  let html = "";
 
   quizQuestions.forEach((q, index) => {
-    if (userAnswers[index] === q.correct) {
-      correctCount++;
-    } else {
-      let userAnswerText = userAnswers[index] === true
-        ? "Prawda"
-        : userAnswers[index] === false
-          ? "Fałsz"
-          : "Brak odpowiedzi";
+    const userAnswer = userAnswers[index];
+    const isCorrect = userAnswer === q.correct;
 
-      mistakes += `
-        <div style="margin-bottom:10px">
-          <strong>Pytanie ${index + 1}:</strong> ${q.question}<br>
-          Twoja odpowiedź: ${userAnswerText}<br>
-          Poprawna odpowiedź: ${q.correct ? "Prawda" : "Fałsz"}<br>
-          Wyjaśnienie: ${q.explanation}
-        </div>
-      `;
-    }
+    if (isCorrect) correctCount++;
+
+    html += `
+      <div style="
+        padding:8px; 
+        margin-bottom:12px; 
+        border-radius:6px; 
+        background:${isCorrect ? '#d1fae5' : '#fee2e2'};
+      ">
+        <strong>${index + 1}. ${q.question}</strong><br>
+        Twoja odpowiedź: <strong>${userAnswer === true ? 'Prawda' : userAnswer === false ? 'Fałsz' : 'Brak odpowiedzi'}</strong><br>
+        Poprawna odpowiedź: <strong>${q.correct ? 'Prawda' : 'Fałsz'}</strong><br>
+        Wyjaśnienie: ${q.explanation}
+      </div>
+    `;
   });
 
-  let scoreScale = Math.round((correctCount / quizQuestions.length) * 10);
+  const scoreScale = Math.round((correctCount / quizQuestions.length) * 10);
 
-  let summary = `
-    <h3>Wynik: ${correctCount}/10</h3>
-    <p>Twoja zdolność oceny mitów zdrowotnych: <strong>${scoreScale}/10</strong></p>
-  `;
+  html = `<h3>Wynik: ${correctCount}/10</h3>
+          <p>Twoja zdolność oceny mitów zdrowotnych: <strong>${scoreScale}/10</strong></p>` + html;
+
 
   if (mistakes) {
     summary += `<h4>Błędy:</h4>${mistakes}`;
