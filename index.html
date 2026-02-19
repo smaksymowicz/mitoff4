@@ -177,7 +177,7 @@ a:hover { text-decoration: none; }
        height="28"
        viewBox="0 0 24 24"
        fill="none"
-       stroke="#facc15"
+       stroke="#F527B4"
        stroke-width="2"
        stroke-linecap="round"
        stroke-linejoin="round"
@@ -676,6 +676,127 @@ async function verifyFact() {
     report.innerText = "Błąd połączenia z serwerem.";
   }
 }
+
+
+// =====================
+// tu zaczyna sie quiz: ZMIENNE GLOBALNE
+// =====================
+let quizQuestions = [];
+let userAnswers = [];
+let questionPool = [];
+
+// =====================
+// BUDOWANIE PULI Z predefinedAnswers
+// =====================
+function buildQuestionPoolFromPredefined() {
+  const pool = [];
+  Object.entries(predefinedAnswers).forEach(([question, data]) => {
+    pool.push({
+      question: question,
+      correct: data.verdict === "Prawda",
+      explanation: data.explanation
+    });
+  });
+  return pool;
+}
+
+// =====================
+// FUNKCJA LOSUJĄCA (Fisher–Yates)
+// =====================
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// =====================
+// START QUIZU
+// =====================
+function startQuiz() {
+  // synchronizacja z predefinedAnswers
+  questionPool = buildQuestionPoolFromPredefined();
+
+  if (questionPool.length < 10) {
+    alert("Za mało pytań w bazie, aby wygenerować quiz 10 pytań.");
+    return;
+  }
+
+  userAnswers = [];
+  quizQuestions = shuffle([...questionPool]).slice(0, 10);
+
+  let html = `<h3>Quiz: Prawda czy Fałsz?</h3>`;
+
+  quizQuestions.forEach((q, index) => {
+    html += `
+      <div style="margin-bottom:15px">
+        <strong>${index + 1}. ${q.question}</strong><br>
+        <button onclick="answerQuestion(${index}, true)" class="mr-2 mb-1 px-2 py-1 rounded bg-gray-700 hover:bg-gray-600">Prawda</button>
+        <button onclick="answerQuestion(${index}, false)" class="mb-1 px-2 py-1 rounded bg-gray-700 hover:bg-gray-600">Fałsz</button>
+        <div id="feedback-${index}"></div>
+      </div>
+    `;
+  });
+
+  html += `<button onclick="finishQuiz()" class="mt-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white">Zakończ quiz</button>`;
+
+  document.querySelector(".report").innerHTML = html;
+}
+
+// =====================
+// ZAPIS ODPOWIEDZI
+// =====================
+function answerQuestion(index, answer) {
+  userAnswers[index] = answer;
+  document.getElementById(`feedback-${index}`).innerHTML =
+    "<span style='color:lightgreen'>Odpowiedź zapisana</span>";
+}
+
+// =====================
+// PODLICZENIE I ANALIZA
+// =====================
+function finishQuiz() {
+  let correctCount = 0;
+  let mistakes = "";
+
+  quizQuestions.forEach((q, index) => {
+    if (userAnswers[index] === q.correct) {
+      correctCount++;
+    } else {
+      let userAnswerText = userAnswers[index] === true
+        ? "Prawda"
+        : userAnswers[index] === false
+          ? "Fałsz"
+          : "Brak odpowiedzi";
+
+      mistakes += `
+        <div style="margin-bottom:10px">
+          <strong>Pytanie ${index + 1}:</strong> ${q.question}<br>
+          Twoja odpowiedź: ${userAnswerText}<br>
+          Poprawna odpowiedź: ${q.correct ? "Prawda" : "Fałsz"}<br>
+          Wyjaśnienie: ${q.explanation}
+        </div>
+      `;
+    }
+  });
+
+  let scoreScale = Math.round((correctCount / quizQuestions.length) * 10);
+
+  let summary = `
+    <h3>Wynik: ${correctCount}/10</h3>
+    <p>Twoja zdolność oceny mitów zdrowotnych: <strong>${scoreScale}/10</strong></p>
+  `;
+
+  if (mistakes) {
+    summary += `<h4>Błędy:</h4>${mistakes}`;
+  } else {
+    summary += `<p>Brak błędów. Bardzo wysoka kompetencja w ocenie wiarygodności informacji.</p>`;
+  }
+
+  document.querySelector(".report").innerHTML = summary;
+}
+
 </script>
 
 </body>
