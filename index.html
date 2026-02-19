@@ -730,10 +730,10 @@ function startQuiz() {
 
   quizQuestions.forEach((q, index) => {
     html += `
-    <div style="margin-bottom:24px; text-align:center;">
+    <div style="margin-bottom:12px; text-align:center;">
         <strong>${index + 1}. ${q.question}</strong><br>
 
-        <div style="display:inline-flex; gap:12px; justify-content:center; margin-top:12px;">
+        <div style="display:inline-flex; gap:12px; justify-content:center; margin-top:6px;">
           <!-- PRAWDA -->
           <div style="text-align:center;">
             <button onclick="answerQuestion(${index}, true)" 
