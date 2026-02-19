@@ -730,23 +730,25 @@ function startQuiz() {
 
   quizQuestions.forEach((q, index) => {
     html += `
-      <div style="margin-bottom:15px">
+      <div style=""margin-bottom:20px; text-align:center;">
         <strong>${index + 1}. ${q.question}</strong><br>
   
 
-       <div class="flex justify-center gap-4 mt-2">
+        <div class="flex justify-center gap-4 mt-2">
           <!-- PRZYCISK PRAWDA -->
-          <button onclick="answerQuestion(${index}, true)" class="flex items-center justify-center w-12 h-12 bg-gray-800 hover:bg-gray-700 rounded transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
+          <button onclick="answerQuestion(${index}, true)" class="flex flex-col items-center justify-center w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded transition-all p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="green" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
             </svg>
+            <span class="text-[10px] mt-0.5">Prawda</span>
           </button>
 
           <!-- PRZYCISK FAŁSZ -->
-          <button onclick="answerQuestion(${index}, false)" class="flex items-center justify-center w-12 h-12 bg-gray-800 hover:bg-gray-700 rounded transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="2">
+          <button onclick="answerQuestion(${index}, false)" class="flex flex-col items-center justify-center w-9 h-9 bg-gray-800 hover:bg-gray-700 rounded transition-all p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="red" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
+            <span class="text-[10px] mt-0.5">Fałsz</span>
           </button>
         </div>
         
