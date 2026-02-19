@@ -730,10 +730,10 @@ function startQuiz() {
 
   quizQuestions.forEach((q, index) => {
     html += `
-    <div style="margin-bottom:12px; text-align:center;">
+    <div style="margin-bottom:6px; text-align:center;">
         <strong>${index + 1}. ${q.question}</strong><br>
 
-        <div style="display:inline-flex; gap:12px; justify-content:center; margin-top:6px;">
+        <div style="display:inline-flex; gap:6px; justify-content:center; margin-top:6px;">
           <!-- PRAWDA -->
           <div style="text-align:center;">
             <button onclick="answerQuestion(${index}, true)" 
@@ -792,7 +792,7 @@ function finishQuiz() {
     if (isCorrect) correctCount++;
 
     html += `
-      <div style="padding:8px; margin-bottom:12px; border-radius:6px;">
+      <div style="padding:8px; margin-bottom:6px; border-radius:6px;">
         <strong>${index + 1}. ${q.question}</strong><br>
         Twoja odpowiedź: <strong style="color:${isCorrect ? 'green' : 'red'};">
           ${userAnswer === true ? 'Prawda' : userAnswer === false ? 'Fałsz' : 'Brak odpowiedzi'}
@@ -812,6 +812,7 @@ function finishQuiz() {
   html += `
     <div style="text-align:center; margin-top:16px;">
       <button onclick="startQuiz()" style="padding:8px 20px; border-radius:6px; background:#10b981; color:white; cursor:pointer; margin-right:8px;">Sprawdź swoją wiedzę ponownie</button>
+      <br>
       <button onclick="location.reload()" style="padding:8px 20px; border-radius:6px; background:#ef4444; color:white; cursor:pointer;">Zakończ quiz</button>
     </div>
   `;
